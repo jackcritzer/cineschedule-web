@@ -5,15 +5,20 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 
 export default function RequireAuth({ children }: { children: React.ReactNode }) {
-    const { token } = useAuth();
+    const { token, ready } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
+        if (!ready) return; // wait until auth bootstraps
         if (!token) {
-            router.replace("/login");
+            router.replace("/login?persist=1");
         }
-    }, [token, router]);
+    }, [ready, token, router]);
 
+    if (!ready) {
+        return <p>Loading…</p>;        // tiny placeholder during bootstrap
+    }
+    
     if (!token) {
         return <p>Redirecting to login…</p>;
     }

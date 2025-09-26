@@ -9,8 +9,8 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 
 export default function LoginPage() {
     const { login } = useAuth();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("user@example.com");
+    const [password, setPassword] = useState("0123456789x");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 

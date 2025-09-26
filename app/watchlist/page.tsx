@@ -20,7 +20,7 @@ interface WatchlistResponse {
 export default function WatchlistPage() {
     const queryClient = useQueryClient();
     const [addId, setAddId] = useState("");
-    const limit = 5;
+    const limit = String(5);
 
     const { data, isLoading, isFetching, error } = useQuery<WatchlistResponse>({
         queryKey: ["watchlist", { limit }],
@@ -77,7 +77,7 @@ export default function WatchlistPage() {
                 )}
 
                 <div className="text-sm text-muted-foreground">
-                    Showing up to {limit} item{limit === 1 ? "" : "s"}
+                    Showing up to {limit} item{limit === String(1) ? "" : "s"}
                     {isFetching && " — refreshing..."}
                 </div>
 
