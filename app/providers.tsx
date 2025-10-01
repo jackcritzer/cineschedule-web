@@ -2,7 +2,7 @@
 
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "sonner";
+import ToasterProvider from '@/app/toaster-provider'
 import { AuthProvider } from "@/lib/auth-context";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             <AuthProvider>
                 {children}
             </AuthProvider>
-            <Toaster />
+            <ToasterProvider />
         </QueryClientProvider>
     );
 }

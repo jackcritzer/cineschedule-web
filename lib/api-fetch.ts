@@ -18,26 +18,32 @@ export function setAuthHandlers(
     onAuthExpired = opts.onAuthExpired;
 }
 
-export async function apiFetch<T>(
-    path: string,
-    options: RequestInit = {}
-): Promise<T> {
+export type ApiFetchInit = {
+    method?: string;
+    headers?: Record<string, string>;
+    body?: unknown;
+};
+
+export async function apiFetch<T>(path: string, init: ApiFetchInit = {}): Promise<T> {
     const base = process.env.NEXT_PUBLIC_API_BASE;
     if (!base) throw new Error("NEXT_PUBLIC_API_BASE not set");
 
     const headers: Record<string, string> = {
         "Content-Type": "application/json",
-        ...(options.headers as Record<string, string>)
+        ...(init.headers as Record<string, string>)
     };
 
     const token = getToken();
+    
     if (token) {
         headers["Authorization"] = `Bearer ${token}`;
     }
 
     const res = await fetch(`${base}${path}`, {
-        ...options,
-        headers
+        ...init,
+        headers,
+        body: init?.body ? JSON.stringify(init.body) : undefined,
+        credentials: 'omit',
     });
 
     // Parse JSON (may be error or success)
