@@ -51,7 +51,7 @@ export default function SiteHeader() {
                     ) : (
                         <Link
                             href={loginHref}
-                            className="rounded-md bg-primary px-3 py-2 text-sm text-primary-foreground hover:opacity-90"
+                            className="rounded-md bg-primary px-3 py-2 text-sm text-primary-foreground hover:opacity-90 text-nowrap"
                         >
                             Log in
                         </Link>
