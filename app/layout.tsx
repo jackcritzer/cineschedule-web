@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Suspense } from 'react';
 import Providers from "./providers";
+import SiteHeader from "@/components/layout/site-header";
 
 export const metadata: Metadata = {
     title: "CineSchedule",
@@ -13,15 +15,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body>
                 <Providers>
                     <div className="min-h-dvh">
-                        <header className="border-b bg-card">
-                            <div className="container flex items-center justify-between py-3">
-                                <div className="text-xl font-semibold tracking-wide">
-                                    <span className="text-secondary">◆</span>{" "}
-                                    <span className="text-primary">Cine</span>
-                                    <span className="text-secondary">Schedule</span>
-                                </div>
-                            </div>
-                        </header>
+                        <Suspense fallback={<div className="h-14 border-b" />}>
+                            <SiteHeader />
+                        </Suspense>
                         <main className="container py-6">
                             {children}
                         </main>
