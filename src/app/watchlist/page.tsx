@@ -8,7 +8,7 @@ import { useMemo, useState } from "react";
 import RequireAuth from "@/components/require-auth";
 import { getApiErrorMessage } from '@/lib/errors';
 import ErrorBanner from '@/components/ui/error-banner';
-import EmptyState from '@/components/empty-state';
+import EmptyState from '@/components/system/empty-state';
 import { Spinner } from '@/components/ui/spinner';
 import PageShell from '@/components/layout/page-shell';
 

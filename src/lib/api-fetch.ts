@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { withApiBase } from "@/config";
 
 const errorEnvelope = z.object({
     error: z.object({
@@ -25,9 +26,6 @@ export type ApiFetchInit = {
 };
 
 export async function apiFetch<T>(path: string, init: ApiFetchInit = {}): Promise<T> {
-    const base = process.env.NEXT_PUBLIC_API_BASE;
-    if (!base) throw new Error("NEXT_PUBLIC_API_BASE not set");
-
     const headers: Record<string, string> = {
         "Content-Type": "application/json",
         ...(init.headers as Record<string, string>)
@@ -39,7 +37,7 @@ export async function apiFetch<T>(path: string, init: ApiFetchInit = {}): Promis
         headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const res = await fetch(`${base}${path}`, {
+    const res = await fetch(withApiBase(path), {
         ...init,
         headers,
         body: init?.body ? JSON.stringify(init.body) : undefined,

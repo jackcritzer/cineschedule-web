@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import RequireAuth from "@/components/require-auth";
 import PageShell from '@/components/layout/page-shell';
 import ErrorBanner from '@/components/ui/error-banner';
-import EmptyState from '@/components/empty-state';
+import EmptyState from '@/components/system/empty-state';
 import { getApiErrorMessage } from '@/lib/errors';
 import { Spinner } from "@/components/ui/spinner";
 
