@@ -8,8 +8,9 @@ import { useMemo, useState } from "react";
 import RequireAuth from "@/components/require-auth";
 import { getApiErrorMessage } from '@/lib/errors';
 import ErrorBanner from '@/components/ui/error-banner';
-import EmptyState from '@/components/empty-state';
+import EmptyState from '@/components/system/empty-state';
 import { Spinner } from '@/components/ui/spinner';
+import PageShell from '@/components/layout/page-shell';
 
 interface WatchlistItem {
     id: number;
@@ -73,41 +74,42 @@ export default function WatchlistPage() {
     // EARLY RETURNS — after all hooks are declared
     if (isLoading) {
         return (
-            <div className="flex min-h-[60vh] items-center justify-center">
+            <PageShell>
                 <div className="flex flex-col items-center gap-3">
                     <Spinner size={28} />
                     <div className="text-sm text-muted-foreground">Loading watchlist…</div>
                 </div>
-            </div>
+            </PageShell>
         );
     }
 
     if (isError) {
         return (
-            <div className="mx-auto w-full max-w-3xl p-4">
+            <PageShell>
                 <ErrorBanner message={getApiErrorMessage(error)} onRetry={() => refetch()} />
-            </div>
+            </PageShell>
         );
     }
 
     if (!items.length) {
         return (
-            <div className="mx-auto w-full max-w-3xl p-4">
+            <PageShell>
                 <EmptyState title="Your watchlist is empty">
                     Search TMDB by ID to add your first title.
                 </EmptyState>
-            </div>
+            </PageShell>
         );
     }
 
-    console.log('items', items)
-
     return (
         <RequireAuth>
-            <div className="space-y-6">
-                <h1 className="text-2xl font-semibold">Your Watchlist</h1>
+            <PageShell>
+                <h1 className="font-display text-2xl">Your Watchlist</h1>
                 <div className="flex items-center gap-2">
                     <Input
+                        className='font-sans w-full rounded-md border border-input bg-background px-3 py-2 text-foreground
+                            placeholder:text-muted-foreground focus-visible:outline-none
+                            focus-visible:ring-2 focus-visible:ring-ring'
                         placeholder="Enter Title ID"
                         value={addId}
                         onChange={(e) => setAddId(e.target.value)}
@@ -141,7 +143,7 @@ export default function WatchlistPage() {
                         </li>
                     ))}
                 </ul>
-            </div>
+            </PageShell>
         </RequireAuth>
     );
 }

@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Theme tokens: “classic theater” dark-first (red/amber) ---- */
+
+/* === Retro Cinema Theme === */
+/* HEX → HSL notes:
+   red #DC2026  hsl(358 75% 49%)
+   maroon #7E1616 hsl(0 70% 29%)
+   amber #FCC252 hsl(40 97% 65%)
+   pale #FFFEAD  hsl(59 100% 84%)
+   offwhite #FDFCFA hsl(40 43% 99%)
+   grey #C0C1C1 hsl(180 1% 75%)
+   midnight #0D2B3E hsl(203 65% 15%)
+   charcoal #232323 hsl(0 0% 14%)
+*/
+
+/* globals.css — theme tokens */
+:root {
+    /* Base */
+    --background: 0 0% 99%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --muted: 215 16% 92%;
+    --muted-foreground: 215 16% 35%;
+    --border: 214 15% 90%;
+    --input: 214 15% 90%;
+    --ring: 0 85% 45%;
+
+    /* Retro red / amber */
+    --primary: 0 85% 45%;             /* deep marquee red */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 39 100% 45%;         /* warm amber */
+    --secondary-foreground: 24 100% 10%;
+
+    --accent: 12 90% 55%;             /* neon orange-red (callouts) */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 40%;
+    --destructive-foreground: 0 0% 98%;
+}
+
+.dark {
+    --background: 24 8% 8%;
+    --foreground: 0 0% 98%;
+    --card: 24 8% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 24 8% 10%;
+    --popover-foreground: 0 0% 98%;
+    --muted: 24 8% 16%;
+    --muted-foreground: 24 6% 70%;
+    --border: 24 8% 18%;
+    --input: 24 8% 18%;
+    --ring: 39 100% 50%;
+
+    --primary: 0 85% 56%;             /* slightly brighter red in dark */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 39 100% 55%;
+    --secondary-foreground: 24 100% 8%;
+
+    --accent: 12 90% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 46%;
+    --destructive-foreground: 0 0% 100%;
+}
+
+/* Extras: subtle film grain + marquee helpers (optional) */
+.bg-film {
+  background:
+    radial-gradient(1200px 600px at 50% 0%, hsl(var(--accent)/0.06), transparent 70%),
+    linear-gradient(0deg, hsl(var(--background)), hsl(var(--background)));
+}
+
+
+/* --- Film grain overlays --- */
+/* Base class (medium) */
+.noise { 
+    position: relative;
+}
+
+.noise::after {
+    content: '';
+    position: absolute; inset: 0;
+    pointer-events: none;
+    mix-blend-mode: soft-light; /* integrates with bg */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='1' stitchTiles='stitch'/%3E%3C/	filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 220px 220px;   /* tile size -> coarser */
+    opacity: 0.035;                 /* overall strength */
+}
+
+/* Finer (denser) grain */
+.noise-fine::after {
+    background-size: 140px 140px;
+    opacity: 0.03;
+}
+
+/* Coarser (more spaced out) grain */
+.noise-coarse::after {
+    background-size: 320px 320px;
+    opacity: 0.045;
+}
+
+/* Optional CRT scanline sheen (subtle) */
+.scanlines { position: relative; }
+.scanlines::before {
+    content: '';
+    position: absolute; inset: 0;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.2) 0px,
+        rgba(255,255,255,0.1) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    opacity: 0.20; /* lower if too visible */
+}
+
+
+.marquee {
+  background: repeating-linear-gradient(
+    -45deg,
+    hsl(var(--primary)) 0 10px,
+    hsl(var(--primary)/0.9) 10px 20px
+  );
+}
+
+/* Subtle film-grain background (very light, safe for performance) */
+body {
+    @apply bg-background text-foreground;
+    background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 3px 3px;
+}

@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { withApiBase } from "@/config";
+import { recordFromHeaders } from "./api-announcements";
 
 const errorEnvelope = z.object({
     error: z.object({
@@ -25,9 +27,6 @@ export type ApiFetchInit = {
 };
 
 export async function apiFetch<T>(path: string, init: ApiFetchInit = {}): Promise<T> {
-    const base = process.env.NEXT_PUBLIC_API_BASE;
-    if (!base) throw new Error("NEXT_PUBLIC_API_BASE not set");
-
     const headers: Record<string, string> = {
         "Content-Type": "application/json",
         ...(init.headers as Record<string, string>)
@@ -39,12 +38,17 @@ export async function apiFetch<T>(path: string, init: ApiFetchInit = {}): Promis
         headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const res = await fetch(`${base}${path}`, {
+    const res = await fetch(withApiBase(path), {
         ...init,
         headers,
         body: init?.body ? JSON.stringify(init.body) : undefined,
         credentials: 'omit',
     });
+
+    // Record deprecation hints (client only is plenty)
+    if (typeof window !== 'undefined') {
+        try { recordFromHeaders(res.headers); } catch { /* ignore */ }
+    }
 
     // Parse JSON (may be error or success)
     const text = await res.text();
