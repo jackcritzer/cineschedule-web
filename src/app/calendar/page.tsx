@@ -86,6 +86,8 @@ export default function CalendarPage() {
         placeholderData: keepPreviousData
     });
 
+    const uniqueItems = useUniqueCalendar(data?.items);
+
 
     function applyFilters() {
         setFilters({
@@ -121,8 +123,6 @@ export default function CalendarPage() {
         </div>
         );
     }
-
-    const uniqueItems = useUniqueCalendar(data?.items);
 
     return (
         <RequireAuth>

@@ -49,7 +49,7 @@ export default function LoginForm() {
                 method: 'POST',
                 body: { email, password },
             });
-            console.log(res)
+
             // Expecting { token, user } or similar
             const accessToken = res?.token;
             if (!accessToken) {

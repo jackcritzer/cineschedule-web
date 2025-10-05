@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { withApiBase } from "@/config";
+import { recordFromHeaders } from "./api-announcements";
 
 const errorEnvelope = z.object({
     error: z.object({
@@ -43,6 +44,11 @@ export async function apiFetch<T>(path: string, init: ApiFetchInit = {}): Promis
         body: init?.body ? JSON.stringify(init.body) : undefined,
         credentials: 'omit',
     });
+
+    // Record deprecation hints (client only is plenty)
+    if (typeof window !== 'undefined') {
+        try { recordFromHeaders(res.headers); } catch { /* ignore */ }
+    }
 
     // Parse JSON (may be error or success)
     const text = await res.text();

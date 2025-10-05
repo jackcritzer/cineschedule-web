@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import Providers from "./providers";
 import SiteHeader from "@/components/layout/site-header";
 import { fontDisplay, fontSans, fontSerif } from './fonts';
+import ApiDeprecationBanner from '@/components/system/api-deprecation-banner';
 
 export const metadata: Metadata = {
     title: { default: 'CineSchedule', template: '%s · CineSchedule' },
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         <Suspense fallback={<div className="h-14 border-b" />}>
                             <SiteHeader />
                         </Suspense>
+                        <ApiDeprecationBanner />
                         <main className="bg-film noise noise-course scanlines py-6 h-max flex-1 w-full">
                             {children}
                         </main>
