@@ -26,22 +26,25 @@ export type ApiFetchInit = {
     body?: unknown;
 };
 
-export async function apiFetch<T>(path: string, init: ApiFetchInit = {}): Promise<T> {
+export async function apiFetch<T>(
+    path: string,
+    init: ApiFetchInit = {}
+): Promise<T> {
     const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-        ...(init.headers as Record<string, string>)
+        'Content-Type': 'application/json',
+        ...init.headers,
     };
 
     const token = getToken();
-    
+
     if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+        headers.Authorization = `Bearer ${token}`;
     }
 
     const res = await fetch(withApiBase(path), {
-        ...init,
+        method: init.method,
         headers,
-        body: init?.body ? JSON.stringify(init.body) : undefined,
+        body: init.body ? JSON.stringify(init.body) : undefined,
         credentials: 'omit',
     });
 
