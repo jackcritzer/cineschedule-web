@@ -39,9 +39,7 @@ export default function SearchResultCard({
                         {result.type}
                     </span>
 
-                    {result.releaseDate && (
-                        <span>{new Date(result.releaseDate).getFullYear()}</span>
-                    )}
+                    {result.year && <span>{result.year}</span>}
                 </div>
 
                 <h2 className="line-clamp-2 text-base font-semibold text-zinc-100">
