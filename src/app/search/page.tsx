@@ -154,6 +154,12 @@ export default function SearchPage() {
                     ))}
                 </section>
             )}
+
+            {addMutation.isError && (
+                <p className="mb-4 text-sm text-red-300">
+                    Could not add that title to your watchlist.
+                </p>
+            )}
         </main>
     );
 }
