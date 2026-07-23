@@ -31,6 +31,7 @@ export default function SiteHeader() {
                 </div>
                 <div className="font-display flex items-center gap-4">
                     <nav className="hidden gap-1 sm:flex">
+                        <NavLink className="text-xl" href="/search">Search</NavLink>
                         <NavLink className="text-xl" href="/watchlist">Watchlist</NavLink>
                         <NavLink className="text-xl" href="/calendar">Calendar</NavLink>
                     </nav>
@@ -65,6 +66,9 @@ export default function SiteHeader() {
             {/* Mobile nav */}
             <div className="border-t sm:hidden">
                 <nav className="mx-auto flex w-full max-w-6xl gap-1 px-4 py-2">
+                    <NavLink href="/search" className="flex-1 text-center" exact={false}>
+                        Search
+                    </NavLink>
                     <NavLink href="/watchlist" className="flex-1 text-center" exact={false}>
                         Watchlist
                     </NavLink>
