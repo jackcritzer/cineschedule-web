@@ -1,40 +1,75 @@
-# CineSchedule Web (Phase 7)
+# CineSchedule Web
 
-Thin Next.js frontend that proves the v1 API: login, watchlist, calendar.
+Next.js frontend for **CineSchedule**, an application for tracking upcoming movie and television release dates.
 
-## Requirements
-- Node 20+
+Users can sign in, manage a personal watchlist, and view upcoming theatrical, digital, streaming, and episode releases through the CineSchedule API.
+
+## Features
+
+- User login and authenticated routes
+- Personal watchlist management
+- Add and remove titles
+- Calendar view for upcoming release events
+- API data fetching with TanStack Query
+- Runtime validation with Zod
+- Responsive interface built with Next.js and Tailwind CSS
+
+## Tech stack
+
+- Next.js 15
+- React 19
+- TypeScript
+- TanStack Query
+- Zod
+- Tailwind CSS
+- Sonner
+
+## Related repository
+
+The backend API, authentication, database, TMDB synchronization, and deployment configuration live in:
+
+[github.com/jackcritzer/cineschedule](https://github.com/jackcritzer/cineschedule)
+
+## Local development
+
+### Requirements
+
+- Node.js 20+
 - pnpm 9+
-- Backend API running locally on **http://localhost:3000/v1**
-- Backend CORS allows `http://localhost:3001`
+- CineSchedule API running locally on `http://localhost:3000/v1`
 
-## Environment
-Create `.env.local` at the project root:
+### Setup
 
+```bash
+git clone https://github.com/jackcritzer/cineschedule-web.git
+cd cineschedule-web
+pnpm install
 ```
+
+Create `.env.local`:
+
+```env
 NEXT_PUBLIC_API_BASE=http://localhost:3000/v1
 ```
 
-## Run (dev)
+Start the development server:
+
 ```bash
-pnpm install
 pnpm dev
-# Frontend on http://localhost:3001
 ```
 
-## Auth (Phase 7)
-- Access token lives **in memory**.
-- Optional **dev persistence**: visit `/login?persist=1` once; token then restores from `sessionStorage` across route changes/HMR.
-- Logout clears in-memory token (and session if persistence is on).
+The app runs on `http://localhost:3001`.
 
 ## Routes
-- `/login` — POST `/auth/login` → sets token → redirects `/watchlist`
-- `/watchlist` — GET `/watchlist?limit=5`, add by Title ID, delete
-- `/calendar` — GET `/calendar?from&to&limit` (fetch on click)
 
-## Troubleshooting
-- **Port clash**: API uses `:3000`, web uses `:3001` (see `package.json`).
-- **CORS**: Ensure backend uses `CORS_ORIGINS=http://localhost:3000,http://localhost:3001,https://app.cineschedule.com`
-  and a regex allow for `https://cineschedule-*.vercel.app` previews.
-- **Auth redirects**: If you bounce back to `/login`, use `/login?persist=1` once, then login again.
-- **Env changes**: After editing `.env.local`, restart `pnpm dev`.
+- `/login` — authenticate and begin a session
+- `/watchlist` — view, add, and remove saved titles
+- `/calendar` — query upcoming release events by date range
+
+## Authentication
+
+Access tokens are held in memory by default. Optional development persistence can be enabled with `/login?persist=1`, which stores the token in `sessionStorage` across route changes and hot reloads.
+
+## Current status
+
+The frontend supports the main CineSchedule workflow and is being refined toward a polished public release.
